@@ -8,7 +8,7 @@ def register():
     fname = input("Enter your First Name: ").strip()
     lname = input("Enter your Last Name: ").strip()
     email = input("Enter your Email: ").strip()
-    mobile = input("Enter your Mobile Number: ").strip()
+    mobile = int(input("Enter your Mobile Number: ").strip())
     while True:
         password = input("Enter your Password: ").strip()
         confirm_pass = input("Confirm your Password: ").strip()

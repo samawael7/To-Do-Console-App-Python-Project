@@ -9,3 +9,29 @@ class User:
         self.mobile = mobile
         self.status = status
         self.role = role
+
+        
+    def user_to_dict(self):
+        return {
+            "id": self.id,
+            "fname": self.fname,
+            "lname": self.lname,
+            "email": self.email,
+            "password": self.password,
+            "mobile": self.mobile,
+            "status": self.status,
+            "role": self.role
+            }
+    
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            data["id"],
+            data["fname"],
+            data["lname"],
+            data["email"],
+            data["password"],
+            data["mobile"],
+            data["status"],
+            data["role"]
+        )

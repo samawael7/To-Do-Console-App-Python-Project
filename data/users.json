@@ -1,1 +1,25 @@
-[]
+[
+    {
+        "user_id" : "1",
+        "fname" : "sama",
+        "lname" : "wael",
+        "email" : "sama@gmail.com",
+        "password" : "123456",
+        "mobile" : "01012345678",
+        "status": "active",
+        "role": "user"
+
+    },
+    
+    {
+        "user_id" : "2",
+        "fname" : "seif",
+        "lname" : "wael",
+        "email" : "seif@gmail.com",
+        "password" : "246810",
+        "mobile" : "01009876543",
+        "status": "active",
+        "role": "user"
+
+    }
+]

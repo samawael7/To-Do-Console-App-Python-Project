@@ -18,7 +18,7 @@ def main():
         print(f"2. Register")
         print(f"3. Exit")
 
-        choice = input(f"\nPlease choose an option:").strip()
+        choice = int(input(f"\nPlease choose an option:").strip())
 
         if choice == 1:
             auth_service.login()
