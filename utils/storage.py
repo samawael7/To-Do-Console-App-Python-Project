@@ -27,3 +27,8 @@ def add_user(user_dict):
     except Exception as e:
         print(f"Error saving user: {e}")  
         return False  
+    
+
+def mobile_exists(mobile):
+    users = load_users()
+    return any(user["mobile"] == mobile for user in users)
