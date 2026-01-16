@@ -31,9 +31,26 @@ def add_user(user_dict):
 
 def id_exists(user_id):
     users = load_users()
-    return any(user["user_id"] == user_id for user in users)
+    return any(user["id"] == user_id for user in users)
     
 
 def mobile_exists(mobile):
     users = load_users()
     return any(user["mobile"] == mobile for user in users)
+
+def get_user_by_email(email):
+    users = load_users()
+    for user in users:
+        if user["email"] == email:
+            return user
+    return None
+
+
+def update_user(updated_user_dict):
+    users = load_users()
+    for i, user in enumerate(users):
+        if user["id"] == updated_user_dict["id"]:
+            users[i] = updated_user_dict
+            save_users(users)
+            return True
+    return False

@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "id": "30307272105343",
+        "fname": "sama",
+        "lname": "wael",
+        "email": "sama@gmail.com",
+        "password": "c729b418c0d6e2d3e051993da7e43652de0fb1ffe83fcc1a2846b502e26b86f0",
+        "mobile": "01234567890",
+        "status": "active",
+        "role": "user"
+    }
+]

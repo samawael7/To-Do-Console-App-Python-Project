@@ -23,6 +23,15 @@ class User:
             "role": self.role
             }
     
+    @staticmethod
+    def update_field(self, fname = None, lname = None, mobile = None):
+        if fname:
+            self.fname = fname
+        if lname:
+            self.lname = lname
+        if mobile:
+            self.mobile = mobile
+    
     @classmethod
     def from_dict(cls, data):
         return cls(
