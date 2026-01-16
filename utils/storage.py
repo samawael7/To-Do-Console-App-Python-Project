@@ -29,6 +29,11 @@ def add_user(user_dict):
         return False  
     
 
+def id_exists(user_id):
+    users = load_users()
+    return any(user["user_id"] == user_id for user in users)
+    
+
 def mobile_exists(mobile):
     users = load_users()
     return any(user["mobile"] == mobile for user in users)
