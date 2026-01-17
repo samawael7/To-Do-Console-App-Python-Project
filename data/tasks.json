@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "title": "project",
+        "description": "to-do list",
+        "priority": "high",
+        "task_status": "in progress",
+        "due_date": "2025-01-18",
+        "owner_id": "30307272105343"
+    },
+    {
+        "title": "presentation",
+        "description": "the zen of python",
+        "priority": "medium",
+        "task_status": "to-do",
+        "due_date": "2026-01-18",
+        "owner_id": "30307272105343"
+    }
+]

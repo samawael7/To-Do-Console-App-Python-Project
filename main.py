@@ -41,7 +41,8 @@ class App(tk.Tk):
     def show_admin_dashboard(self, user):
         self.current_user = user
         self.clear_screen()
-        DashboardScreen(self, user, is_admin=True).pack(expand=True, fill="both")
+        from UI.admin_dashboard_ui import AdminDashboardScreen
+        AdminDashboardScreen(self, user).pack(expand=True, fill="both")
 
 
 if __name__ == "__main__":
