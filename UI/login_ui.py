@@ -70,7 +70,7 @@ class LoginScreen(tk.Frame):
         ).pack(fill="x", ipady=6)
     
     def login(self):
-        email = self.email_entry.get()
+        email = self.email_entry.get().strip().lower()
         password = self.password_entry.get()
         
         if not email or not password:
@@ -82,9 +82,14 @@ class LoginScreen(tk.Frame):
         
         if success:
             user = auth_service.get_current_user()
-            self.master.show_dashboard(user)
+            if auth_service.is_admin():
+                self.master.show_admin_dashboard(user)
+
+            else:
+                self.master.show_dashboard(user)
         else:
             messagebox.showerror("Error", "Invalid credentials or inactive account")
+
     
     def go_to_register(self):
         self.master.show_registration()

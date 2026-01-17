@@ -44,16 +44,6 @@ class App(tk.Tk):
         DashboardScreen(self, user, is_admin=True).pack(expand=True, fill="both")
 
 
-    if auth_service.login_with_email(email, password):
-        user = auth_service.get_current_user()
-
-        if auth_service.is_admin():
-            self.master.show_admin_dashboard(user)
-        else:
-            self.master.show_dashboard(user)
-
-
-
 if __name__ == "__main__":
     app = App()
     app.mainloop()
