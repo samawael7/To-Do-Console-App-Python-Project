@@ -5,8 +5,38 @@
         "lname": "wael",
         "email": "sama@gmail.com",
         "password": "c729b418c0d6e2d3e051993da7e43652de0fb1ffe83fcc1a2846b502e26b86f0",
-        "mobile": "01234567890",
+        "mobile": "01234567899",
         "status": "active",
         "role": "user"
+    },
+    {
+        "id": "30309292105343",
+        "fname": "seif",
+        "lname": "wael",
+        "email": "seif@gmail.com",
+        "password": "c729b418c0d6e2d3e051993da7e43652de0fb1ffe83fcc1a2846b502e26b86f0",
+        "mobile": "01002345678",
+        "status": "inactive",
+        "role": "user"
+    },
+    {
+        "id": "30307279999999",
+        "fname": "sama",
+        "lname": "wael",
+        "email": "sara@gmail.com",
+        "password": "c729b418c0d6e2d3e051993da7e43652de0fb1ffe83fcc1a2846b502e26b86f0",
+        "mobile": "01050937464",
+        "status": "inactive",
+        "role": "user"
+    },
+    {
+        "id": "12345678912345",
+        "fname": "admin",
+        "lname": "xoxo",
+        "email": "admin@gmail.com",
+        "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+        "mobile": "01000000000",
+        "status": "active",
+        "role": "admin"
     }
 ]

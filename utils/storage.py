@@ -2,6 +2,7 @@ import json
 import os
 
 USERS_FILE = os.path.join("data", "users.json")
+TASKS_FILE = os.path.join("data", "tasks.json")
 
 def load_users():
     if not os.path.exists(USERS_FILE):
@@ -54,3 +55,26 @@ def update_user(updated_user_dict):
             save_users(users)
             return True
     return False
+
+
+def load_tasks():
+    if not os.path.exists(TASKS_FILE):
+        return []
+    with open(TASKS_FILE, "r") as file:
+        return json.load(file)
+    
+def save_tasks(tasks):
+    with open(TASKS_FILE, "w") as file:
+        json.dump(tasks, file, indent=4)
+
+def add_task(task_dict):
+    tasks = load_tasks()
+    tasks.append(task_dict)
+    save_tasks(tasks)
+
+def get_user_tasks(user_id):
+    tasks = load_tasks()
+    return [task for task in tasks if task["owner_id"]== user_id]
+
+def get_all_tasks():
+    return load_tasks()

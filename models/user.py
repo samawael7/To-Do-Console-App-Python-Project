@@ -23,7 +23,6 @@ class User:
             "role": self.role
             }
     
-    @staticmethod
     def update_field(self, fname = None, lname = None, mobile = None):
         if fname:
             self.fname = fname
