@@ -1,4 +1,4 @@
-#task_service.py = إزاي أتعامل مع المهام؟
+#task_service.py = إزاي أتعامل مع التاسكات؟؟؟
 from utils import storage
 from models.task import Task
 from models.user import User
@@ -25,9 +25,10 @@ def view_tasks():
 
 
 def edit_task(task_title, title=None, description=None, priority=None, due_date=None, task_status=None):
+    user = auth_service.get_current_user()
     tasks = storage.load_tasks()
     for task in tasks:
-        if task["owner_id"] == auth_service.get_current_user().id and task["title"] == task_title:
+        if task["owner_id"] == user.id and task["title"] == task_title and user.role == 'user':
             if title:
                 task["title"] = title
             if description:
@@ -43,14 +44,14 @@ def edit_task(task_title, title=None, description=None, priority=None, due_date=
     return False
 
 
-def delete_task(task_title): #delete tasks by user
+def delete_task(task_title): 
     current_user = auth_service.get_current_user()
     if not current_user:
         return False
     
     tasks = storage.load_tasks()
     for task in tasks:
-        if task["owner_id"] == auth_service.get_current_user().id or current_user.role == 'admin':
+        if task["owner_id"] == current_user.id or current_user.role == 'admin':
             if task["title"] == task_title:
                 tasks.remove(task)
                 storage.save_tasks(tasks)
@@ -59,15 +60,17 @@ def delete_task(task_title): #delete tasks by user
 
 
 def search_tasks(keyword):
+    user = auth_service.get_current_user()
     tasks = storage.load_tasks()
     result = []
     for task in tasks:
-        if (task["owner_id"] == auth_service.get_current_user().id or auth_service.get_current_user().role == 'admin') and (keyword.lower() in task["title"].lower() or keyword.lower() in task["description"].lower()):
+        task["description"] = []
+        if (task["owner_id"] == user.id or user.role == 'admin') and (keyword.lower() in task["title"].lower() or keyword.lower() in task["description"].lower()):
             result.append(task)
     return result
     
 
-def sort_tasks(sort_by):  # sort_by = "due_date" أو "priority" أو "status"
+def sort_tasks(sort_by):  
     tasks = storage.load_tasks()
     user = auth_service.get_current_user()
     user_tasks = [task for task in tasks if task["owner_id"] == user.id or user.role == 'admin']
@@ -75,18 +78,18 @@ def sort_tasks(sort_by):  # sort_by = "due_date" أو "priority" أو "status"
     if sort_by == "due_date":
         user_tasks.sort(key=lambda x: x["due_date"])
     elif sort_by == "priority":
-        priority_order = {"High": 1, "Medium": 2, "Low": 3}
+        priority_order = {"low": 1, "medium": 2, "high": 3}
         user_tasks.sort(key=lambda x: priority_order.get(x["priority"], 4))
     elif sort_by == "status":
-        status_order = {"Pending": 1, "In Progress": 2, "Completed": 3}
+        status_order = {"to-do": 1, "in progress": 2, "completed": 3}
         user_tasks.sort(key=lambda x: status_order.get(x["task_status"], 4))
     
     return user_tasks
     
 
 def filter_tasks(filter_by, filter_value):  # filter_by = "priority", filter_value = "High"
-    tasks = storage.load_tasks()
     user = auth_service.get_current_user()
-    filtered_tasks = [task for task in tasks if (task["owner_id"] == user.id or user.role == 'admin') and task[filter_by] == filter_value]
+    tasks = storage.load_tasks()
+    filtered_tasks = [task for task in tasks if (task["owner_id"] == user.id or user.role == 'admin') and str(task.get(filter_by, "")).lower() == str(filter_value).lower()]
     return filtered_tasks
     

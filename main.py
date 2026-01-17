@@ -5,6 +5,7 @@ from UI.dashboard_ui import DashboardScreen
 from UI.profile_ui import ProfileScreen
 from services import auth_service
 from models.user import User
+from models.task import Task
 
 class App(tk.Tk):
     def __init__(self):
