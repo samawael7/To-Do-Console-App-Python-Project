@@ -80,6 +80,16 @@ def get_all_tasks():
     return load_tasks()
 
 
+def activate_user(user_id):
+    users = load_users()
+    for user in users:
+        if user["id"] == user_id:
+            user["status"] = "active"
+            save_users(users)
+            return True
+    return False
+
+
 def deactivate_user(user_id):
     users = load_users()
     for user in users:

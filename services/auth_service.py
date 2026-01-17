@@ -83,6 +83,12 @@ def is_user():
         return False
     return current_user.role == 'user'
 
+def activate_user(user_id):
+    if not is_admin():
+        return False
+    
+    return storage.activate_user(user_id)
+
 def deactivate_user(user_id):
     current_user = get_current_user()
     if not current_user or current_user.role != "admin":

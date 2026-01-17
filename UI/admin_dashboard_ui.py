@@ -57,6 +57,20 @@ class AdminDashboardScreen(tk.Frame):
             pady=8,
             cursor="hand2",
         ).pack(side="left", padx=5, pady=5)
+
+        tk.Button(
+            options_frame,
+            text="✅ Activate User",
+            command=self.activate_user,
+            bg="#27AE60",  # أخضر
+            fg="white",
+            font=("Arial", 9, "bold"),
+            relief="flat",
+            bd=0,
+            padx=10,
+            pady=8,
+            cursor="hand2",
+        ).pack(side="left", padx=5, pady=5)
         
         tk.Button(
             options_frame,
@@ -164,6 +178,15 @@ class AdminDashboardScreen(tk.Frame):
         else:
             user_list = "\n".join([f"👤 {u['fname']} {u['lname']}\n   Email: {u['email']} | Status: {u['status']}\n" for u in users])
             messagebox.showinfo("All Users", user_list)
+    
+    def activate_user(self):
+        user_id = simpledialog.askstring("Activate User", "Enter User ID:")
+        if user_id:
+            if auth_service.activate_user(user_id):
+                messagebox.showinfo("Success", f"✅ User {user_id} activated!")
+                self.load_users()
+            else:
+                messagebox.showerror("Error", "❌ Failed to activate user!")
     
     def deactivate_user(self):
         user_id = simpledialog.askstring("Deactivate User", "Enter User ID:")
