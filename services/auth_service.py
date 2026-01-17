@@ -65,12 +65,10 @@ def update_profile(fname=None, lname=None, mobile=None):
     return True
 
 def logout():
-    """Logout current user"""
     global current_user
     current_user = None
 
 def get_current_user():
-    """Get current logged in user"""
     return current_user
 
 def is_admin():
@@ -84,3 +82,10 @@ def is_user():
     if not current_user:
         return False
     return current_user.role == 'user'
+
+def deactivate_user(user_id):
+    current_user = get_current_user()
+    if not current_user or current_user.role != "admin":
+        return False
+    
+    return storage.deactivate_user(user_id)
