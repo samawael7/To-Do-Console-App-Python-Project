@@ -71,7 +71,6 @@ class TaskManagementScreen(tk.Frame):
             cursor="hand2",
         ).pack(side="left", padx=5, pady=5)
             
-        # Admin: Sort & Filter ALL tasks
         if self.is_admin:
             tk.Button(
                 options_frame,
@@ -101,7 +100,6 @@ class TaskManagementScreen(tk.Frame):
                 cursor="hand2",
             ).pack(side="left", padx=5, pady=5)
         else:
-            # Regular User: Sort & Filter OWN tasks only
             tk.Button(
                 options_frame,
                 text="📊 Sort",
@@ -130,13 +128,11 @@ class TaskManagementScreen(tk.Frame):
                 cursor="hand2",
             ).pack(side="left", padx=5, pady=5)
         
-        # Tasks Display
         self.tasks_frame = tk.Frame(self, bg=THEME_BG)
         self.tasks_frame.pack(fill="both", expand=True, pady=10)
         
         self.refresh_tasks()
         
-        # Back Button
         tk.Button(
             self,
             text="← Back to Dashboard",
@@ -186,7 +182,6 @@ class TaskManagementScreen(tk.Frame):
             fg=THEME_TEXT,
         ).pack(anchor="w")
         
-        # Show owner if admin
         if self.is_admin:
             details = f"Owner: {task['owner_id']} | Status: {task['task_status']} | Priority: {task['priority']} | Due: {task['due_date']}"
         else:
@@ -214,7 +209,6 @@ class TaskManagementScreen(tk.Frame):
         action_frame = tk.Frame(card, bg="#FFFFFF")
         action_frame.pack(side="right", padx=15, pady=12)
         
-        # Regular User: Edit/Delete own tasks only
         if not self.is_admin:
             from services import auth_service
             current_user = auth_service.get_current_user()
@@ -248,7 +242,6 @@ class TaskManagementScreen(tk.Frame):
                     cursor="hand2",
                 ).pack(side="left", padx=3)
         else:
-            # Admin: Delete any task
             tk.Button(
                 action_frame,
                 text="🗑️ Delete",
@@ -264,7 +257,6 @@ class TaskManagementScreen(tk.Frame):
             ).pack(side="left", padx=3)
     
     def create_new_task(self):
-    # Pop-up بسيط للـ create task
         title = simpledialog.askstring("Create Task", "Task Title:")
         if not title:
             return

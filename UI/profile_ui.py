@@ -103,10 +103,8 @@ class ProfileScreen(tk.Frame):
         user = auth_service.get_current_user()
         
         if user.role == "admin":
-            # رجعي للـ admin dashboard
             from UI.admin_dashboard_ui import AdminDashboardScreen
             self.master.clear_screen()
             AdminDashboardScreen(self.master, user).pack(expand=True, fill="both")
         else:
-            # رجعي للـ regular dashboard
             self.master.show_dashboard(user)
