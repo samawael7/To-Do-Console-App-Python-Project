@@ -13,7 +13,7 @@ class App(tk.Tk):
         self.title("Task Management App")
         self.geometry("550x750")
         self.configure(bg="#FFE0E9")
-        self.resizable(False, False)
+        self.resizable(True, True)
         self.current_user = None
         self.show_login()
     

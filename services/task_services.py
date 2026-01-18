@@ -87,7 +87,7 @@ def sort_tasks(sort_by):
     return user_tasks
     
 
-def filter_tasks(filter_by, filter_value):  # filter_by = "priority", filter_value = "High"
+def filter_tasks(filter_by, filter_value):  
     user = auth_service.get_current_user()
     tasks = storage.load_tasks()
     filtered_tasks = [task for task in tasks if (task["owner_id"] == user.id or user.role == 'admin') and str(task.get(filter_by, "")).lower() == str(filter_value).lower()]

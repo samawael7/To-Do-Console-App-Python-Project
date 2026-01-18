@@ -50,7 +50,7 @@ def is_valid_task_status(status):
             print("invalid status")
             return False
 
-def is_valid_due_date(due_date): #must be in future
+def is_valid_due_date(due_date): 
     try:
         task_due_date = datetime.strptime(due_date, "%Y-%m-%d")
         if task_due_date > datetime.now():
