@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 from services import task_services
+from utils import validators
 
 THEME_BG = "#FFE0E9"
 THEME_ACCENT = "#B9375E"
@@ -15,7 +16,6 @@ class TaskManagementScreen(tk.Frame):
         self.build_ui()
     
     def build_ui(self):
-        # Header
         header_frame = tk.Frame(self, bg=THEME_BG)
         header_frame.pack(fill="x", pady=(0, 20))
         
@@ -36,11 +36,9 @@ class TaskManagementScreen(tk.Frame):
                 fg=THEME_ACCENT,
             ).pack(anchor="w", side="left")
         
-        # Options Frame
         options_frame = tk.Frame(self, bg="#FFFFFF", relief="solid", bd=1)
         options_frame.pack(fill="x", pady=(0, 15))
         
-        # Regular User Options (Create, Search)
         if not self.is_admin:
             tk.Button(
                 options_frame,
@@ -55,28 +53,12 @@ class TaskManagementScreen(tk.Frame):
                 pady=8,
                 cursor="hand2",
             ).pack(side="left", padx=5, pady=5)
-        
-        # Both can search
-        tk.Button(
-            options_frame,
-            text="🔍 Search",
-            command=self.search_task,
-            bg=THEME_ACCENT,
-            fg="white",
-            font=("Arial", 9, "bold"),
-            relief="flat",
-            bd=0,
-            padx=10,
-            pady=8,
-            cursor="hand2",
-        ).pack(side="left", padx=5, pady=5)
             
-        if self.is_admin:
             tk.Button(
                 options_frame,
-                text="📊 Sort",
-                command=self.sort_task,
-                bg="#F0A500",
+                text="🔍 Search",
+                command=self.search_task,
+                bg=THEME_ACCENT,
                 fg="white",
                 font=("Arial", 9, "bold"),
                 relief="flat",
@@ -86,20 +68,6 @@ class TaskManagementScreen(tk.Frame):
                 cursor="hand2",
             ).pack(side="left", padx=5, pady=5)
             
-            tk.Button(
-                options_frame,
-                text="⚙️ Filter",
-                command=self.filter_task,
-                bg="#F0A500",
-                fg="white",
-                font=("Arial", 9, "bold"),
-                relief="flat",
-                bd=0,
-                padx=10,
-                pady=8,
-                cursor="hand2",
-            ).pack(side="left", padx=5, pady=5)
-        else:
             tk.Button(
                 options_frame,
                 text="📊 Sort",
@@ -148,29 +116,28 @@ class TaskManagementScreen(tk.Frame):
         ).pack(fill="x", pady=(10, 0))
         
     def refresh_tasks(self):
-            for widget in self.tasks_frame.winfo_children():
-                widget.destroy()
-            
-            tasks = task_services.view_tasks()
-            
-            if not tasks:
-                tk.Label(
-                    self.tasks_frame,
-                    text="📭 No tasks yet! Create one to get started.",
-                    font=("Arial", 12, "italic"),
-                    bg=THEME_BG,
-                    fg="#999"
-                ).pack(pady=30)
-                return
-            
-            for task in tasks:
-                self.create_task_card(task)
+        for widget in self.tasks_frame.winfo_children():
+            widget.destroy()
+        
+        tasks = task_services.view_tasks()
+        
+        if not tasks:
+            tk.Label(
+                self.tasks_frame,
+                text="📭 No tasks yet! Create one to get started.",
+                font=("Arial", 12, "italic"),
+                bg=THEME_BG,
+                fg="#999"
+            ).pack(pady=30)
+            return
+        
+        for task in tasks:
+            self.create_task_card(task)
     
     def create_task_card(self, task):
         card = tk.Frame(self.tasks_frame, bg="#FFFFFF", relief="solid", bd=1)
         card.pack(fill="x", pady=8)
         
-        # Task Info
         info_frame = tk.Frame(card, bg="#FFFFFF")
         info_frame.pack(fill="x", padx=15, pady=12, side="left", expand=True)
         
@@ -205,7 +172,6 @@ class TaskManagementScreen(tk.Frame):
                 wraplength=300,
             ).pack(anchor="w", pady=(3, 0))
         
-        # Action Buttons
         action_frame = tk.Frame(card, bg="#FFFFFF")
         action_frame.pack(side="right", padx=15, pady=12)
         
@@ -258,7 +224,10 @@ class TaskManagementScreen(tk.Frame):
     
     def create_new_task(self):
         title = simpledialog.askstring("Create Task", "Task Title:")
-        if not title:
+        if title is None:  
+            return
+        
+        if not validators.is_valid_task_title(title):   
             return
         
         description = simpledialog.askstring("Create Task", "Description (optional):")
@@ -269,12 +238,21 @@ class TaskManagementScreen(tk.Frame):
         if not priority:
             return
         
+        if not validators.is_valid_priority(priority):
+            return
+        
         status = simpledialog.askstring("Create Task", "Status (To-Do/In Progress/Completed):")
         if not status:
             return
         
+        if not validators.is_valid_task_status(status):
+            return
+        
         due_date = simpledialog.askstring("Create Task", "Due Date (YYYY-MM-DD):")
         if not due_date:
+            return
+        
+        if not validators.is_valid_due_date(due_date):
             return
         
         if task_services.create_task(title, description, priority, status, due_date):

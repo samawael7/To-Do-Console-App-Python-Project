@@ -65,7 +65,7 @@ def search_tasks(keyword):
     result = []
     for task in tasks:
         task["description"] = []
-        if (task["owner_id"] == user.id or user.role == 'admin') and (keyword.lower() in task["title"].lower() or keyword.lower() in task["description"].lower()):
+        if (task["owner_id"] == user.id) and (keyword.lower() in task["title"].lower() or keyword.lower() in task["description"].lower()):
             result.append(task)
     return result
     
@@ -73,7 +73,7 @@ def search_tasks(keyword):
 def sort_tasks(sort_by):  
     tasks = storage.load_tasks()
     user = auth_service.get_current_user()
-    user_tasks = [task for task in tasks if task["owner_id"] == user.id or user.role == 'admin']
+    user_tasks = [task for task in tasks if task["owner_id"] == user.id]
     
     if sort_by == "due_date":
         user_tasks.sort(key=lambda x: x["due_date"])
@@ -90,6 +90,6 @@ def sort_tasks(sort_by):
 def filter_tasks(filter_by, filter_value):  
     user = auth_service.get_current_user()
     tasks = storage.load_tasks()
-    filtered_tasks = [task for task in tasks if (task["owner_id"] == user.id or user.role == 'admin') and str(task.get(filter_by, "")).lower() == str(filter_value).lower()]
+    filtered_tasks = [task for task in tasks if (task["owner_id"] == user.id) and str(task.get(filter_by, "")).lower() == str(filter_value).lower()]
     return filtered_tasks
     
